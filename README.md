@@ -6,4 +6,6 @@
     GREEN -> Arduino Pin 6 (configurable below)
     WHITE -> Arduino (or power) Ground
 
-    NOTE THAT THE LEDs HAVE POLARITY AND MUST HAVE THEIR DATA CONNECTED TO THE MALE CABLE (or Din on the strip itself)
+  NOTE THAT THE LEDs HAVE POLARITY AND MUST HAVE THEIR DATA CONNECTED TO THE MALE CABLE (or Din on the strip itself)
+
+  Find a virtual version of this project (and see wiring information) here: https://www.tinkercad.com/things/9MeaKMZq6zi-button-activated-led-strip
