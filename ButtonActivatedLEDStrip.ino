@@ -71,8 +71,8 @@ void runMode() {
     case 4: fadeEffect(); break;                                  // Fade
     case 5: flameEffect(); break;                                 // Flame
     case 6: rainbowEffect(); break;                               // Rainbow
-    case 7: discoEffect(); break;                                // Strobe
-    case 8: fillColor(strip.Color(255, 255, 255)); break;         // White
+    case 7: discoEffect(); break;                                 // Random Disco Colors
+    case 8: fireworkEffect(); break;                              // Firework effect
     case 9: theaterChase(strip.Color(127, 127, 127), 50); break;  //Marquee lights
     case 10: colorWipe(); break;      //Fill strip with color
   }
@@ -92,7 +92,7 @@ void printMode(int m) {
     case 5: Serial.println("Flame Effect"); break;
     case 6: Serial.println("Rainbow Effect"); break;
     case 7: Serial.println("Disco Effect"); break;
-    case 8: Serial.println("All White"); break;
+    case 8: Serial.println("Firework Effect"); break;
     case 9: Serial.println("Theater Chase"); break;
     case 10: Serial.println("Color Wipe"); break;
   }
@@ -165,6 +165,51 @@ void theaterChase(uint32_t c, uint8_t wait) {
   q++;
   if (q >= 3) q = 0;
   delay(wait);
+}
+
+// Firework effect: bursts of color that fade out
+void fireworkEffect() {
+  static int step = 0;
+  static int center = 0;
+  static int r = 0, g = 0, b = 0;
+
+  if (step == 0) {
+    // Pick a random firework start
+    center = random(0, NUMPIXELS);
+    r = random(100, 230);
+    g = random(100, 230);
+    b = random(100, 230);
+    step = 10; // smaller step count = faster bursts
+  }
+
+  // Fade out previous pixels slightly (trail effect)
+  for (int i = 0; i < NUMPIXELS; i++) {
+    uint32_t c = strip.getPixelColor(i);
+    int red   = (c >> 16) & 0xFF;
+    int green = (c >> 8) & 0xFF;
+    int blue  = c & 0xFF;
+    strip.setPixelColor(i, strip.Color(red * 0.7, green * 0.7, blue * 0.7)); 
+  }
+
+  // Draw current "burst"
+  int radius = (10 - step);
+  for (int i = -radius; i <= radius; i++) {
+    int pos = center + i;
+    if (pos >= 0 && pos < NUMPIXELS) {
+      int fade = max(0, 255 - abs(i) * 60); // sharper falloff
+      strip.setPixelColor(pos, strip.Color(r * fade / 255, g * fade / 255, b * fade / 255));
+    }
+  }
+
+  strip.show();
+  delay(40); // refresh
+
+  step--;
+
+  // When finished, immediately start a new firework
+  if (step <= 0) {
+    step = 0; // reset for new firework
+  }
 }
 
 // Color wipe effect (lights up one by one, cycles through different colors)
