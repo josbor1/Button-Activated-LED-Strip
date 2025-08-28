@@ -8,7 +8,7 @@
     NOTE THAT THE LEDs HAVE POLARITY AND MUST HAVE THEIR DATA CONNECTED TO THE MALE CABLE (or Din on the strip itself)
 */
 
-#include <Adafruit_NeoPixel.h>
+#include <Adafruit_NeoPixel.h> // You will need to ensure that the Adafruit NeoPixel library is installed via the Arduino IDE
 
 // ---------------- SETTINGS ----------------
 #define PIN 6          // Arduino pin connected to the NeoPixel strip
