@@ -108,8 +108,6 @@ void fillColor(uint32_t c) {
   strip.show();
 }
 
-//================================
-
 // Fade effect (smoothly changes brightness up and down)
 void fadeEffect() {
   static int brightness = 0;  // Current brightness (0–255)
@@ -122,8 +120,6 @@ void fadeEffect() {
   delay(20);
 }
 
-//================================
-
 // Flame effect (random flickering orange)
 void flameEffect() {
   for (int i = 0; i < NUMPIXELS; i++) {
@@ -134,8 +130,6 @@ void flameEffect() {
   strip.show();
   delay(50);
 }
-
-//================================
 
 // Rainbow effect (colors cycle smoothly across strip)
 void rainbowEffect() {
@@ -148,8 +142,6 @@ void rainbowEffect() {
   delay(20);
 }
 
-//================================
-
 // Flashy random disco effect
 void discoEffect() {
   for (int i = 0; i < NUMPIXELS; i++) {
@@ -161,8 +153,6 @@ void discoEffect() {
   strip.show();
   delay(50);  // speed of the disco effect
 }
-
-//================================
 
 // Theater chase effect (moving dots like Marquee lights)
 void theaterChase(uint32_t c, uint8_t wait) {
@@ -177,8 +167,6 @@ void theaterChase(uint32_t c, uint8_t wait) {
   delay(wait);
 }
 
-//================================
-
 // Firework effect: bursts of color that fade out
 void fireworkEffect() {
   static int step = 0;
@@ -188,9 +176,9 @@ void fireworkEffect() {
   if (step == 0) {
     // Pick a random firework start
     center = random(0, NUMPIXELS);
-    r = random(100, 230);
-    g = random(100, 230);
-    b = random(100, 230);
+    r = random(50, 256);
+    g = random(50, 256);
+    b = random(50, 256);
     step = 10;  // smaller step count = faster bursts
   }
 
@@ -224,8 +212,6 @@ void fireworkEffect() {
   }
 }
 
-//================================
-
 // Color wipe effect (lights up one by one, cycles through different colors)
 void colorWipe() {
   static int i = 0;          // current pixel
@@ -239,7 +225,7 @@ void colorWipe() {
     { 255, 255, 0 },  // yellow
     { 0, 255, 255 }   // cyan
   };
- 
+
   // Set pixel to current color
   strip.setPixelColor(i, strip.Color(colors[colorStep][0], colors[colorStep][1], colors[colorStep][2]));
   strip.show();
@@ -252,8 +238,6 @@ void colorWipe() {
 
   delay(50);  // controls speed of wipe
 }
-
-//================================
 
 // Helper function: converts a number (0–255) into a rainbow color
 uint32_t Wheel(byte WheelPos) {
