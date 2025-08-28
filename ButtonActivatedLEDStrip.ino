@@ -74,7 +74,7 @@ void runMode() {
     case 7: discoEffect(); break;                                 // Random Disco Colors
     case 8: fireworkEffect(); break;                              // Firework effect
     case 9: theaterChase(strip.Color(127, 127, 127), 50); break;  //Marquee lights
-    case 10: colorWipe(); break;      //Fill strip with color
+    case 10: colorWipe(); break;                                  //Fill strip with color
   }
 }
 
@@ -108,6 +108,8 @@ void fillColor(uint32_t c) {
   strip.show();
 }
 
+//================================
+
 // Fade effect (smoothly changes brightness up and down)
 void fadeEffect() {
   static int brightness = 0;  // Current brightness (0–255)
@@ -120,6 +122,8 @@ void fadeEffect() {
   delay(20);
 }
 
+//================================
+
 // Flame effect (random flickering orange)
 void flameEffect() {
   for (int i = 0; i < NUMPIXELS; i++) {
@@ -130,6 +134,8 @@ void flameEffect() {
   strip.show();
   delay(50);
 }
+
+//================================
 
 // Rainbow effect (colors cycle smoothly across strip)
 void rainbowEffect() {
@@ -142,6 +148,8 @@ void rainbowEffect() {
   delay(20);
 }
 
+//================================
+
 // Flashy random disco effect
 void discoEffect() {
   for (int i = 0; i < NUMPIXELS; i++) {
@@ -151,8 +159,10 @@ void discoEffect() {
     strip.setPixelColor(i, strip.Color(r, g, b));
   }
   strip.show();
-  delay(50); // speed of the disco effect
+  delay(50);  // speed of the disco effect
 }
+
+//================================
 
 // Theater chase effect (moving dots like Marquee lights)
 void theaterChase(uint32_t c, uint8_t wait) {
@@ -167,6 +177,8 @@ void theaterChase(uint32_t c, uint8_t wait) {
   delay(wait);
 }
 
+//================================
+
 // Firework effect: bursts of color that fade out
 void fireworkEffect() {
   static int step = 0;
@@ -179,16 +191,16 @@ void fireworkEffect() {
     r = random(100, 230);
     g = random(100, 230);
     b = random(100, 230);
-    step = 10; // smaller step count = faster bursts
+    step = 10;  // smaller step count = faster bursts
   }
 
   // Fade out previous pixels slightly (trail effect)
   for (int i = 0; i < NUMPIXELS; i++) {
     uint32_t c = strip.getPixelColor(i);
-    int red   = (c >> 16) & 0xFF;
+    int red = (c >> 16) & 0xFF;
     int green = (c >> 8) & 0xFF;
-    int blue  = c & 0xFF;
-    strip.setPixelColor(i, strip.Color(red * 0.7, green * 0.7, blue * 0.7)); 
+    int blue = c & 0xFF;
+    strip.setPixelColor(i, strip.Color(red * 0.7, green * 0.7, blue * 0.7));
   }
 
   // Draw current "burst"
@@ -196,48 +208,52 @@ void fireworkEffect() {
   for (int i = -radius; i <= radius; i++) {
     int pos = center + i;
     if (pos >= 0 && pos < NUMPIXELS) {
-      int fade = max(0, 255 - abs(i) * 60); // sharper falloff
+      int fade = max(0, 255 - abs(i) * 60);  // sharper falloff
       strip.setPixelColor(pos, strip.Color(r * fade / 255, g * fade / 255, b * fade / 255));
     }
   }
 
   strip.show();
-  delay(40); // refresh
+  delay(40);  // refresh
 
   step--;
 
   // When finished, immediately start a new firework
   if (step <= 0) {
-    step = 0; // reset for new firework
+    step = 0;  // reset for new firework
   }
 }
 
+//================================
+
 // Color wipe effect (lights up one by one, cycles through different colors)
 void colorWipe() {
-  static int i = 0;        // current pixel
-  static int colorStep = 0; // which color we're using
+  static int i = 0;          // current pixel
+  static int colorStep = 0;  // which color we're using
 
   // Define colors to cycle through
   int colors[5][3] = {
-    {255, 0, 0},   // red
-    {0, 255, 0},   // green
-    {0, 0, 255},   // blue
-    {255, 255, 0}, // yellow
-    {0, 255, 255}  // cyan
+    { 255, 0, 0 },    // red
+    { 0, 255, 0 },    // green
+    { 0, 0, 255 },    // blue
+    { 255, 255, 0 },  // yellow
+    { 0, 255, 255 }   // cyan
   };
-
+ 
   // Set pixel to current color
   strip.setPixelColor(i, strip.Color(colors[colorStep][0], colors[colorStep][1], colors[colorStep][2]));
   strip.show();
 
-  i++; // move to next pixel
+  i++;  // move to next pixel
   if (i >= NUMPIXELS) {
-    i = 0;          // reset pixel counter
-    colorStep++;    // next color
+    i = 0;        // reset pixel counter
+    colorStep++;  // next color
   }
 
-  delay(50); // controls speed of wipe
+  delay(50);  // controls speed of wipe
 }
+
+//================================
 
 // Helper function: converts a number (0–255) into a rainbow color
 uint32_t Wheel(byte WheelPos) {
